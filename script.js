@@ -198,7 +198,7 @@ customerForm.addEventListener("submit", function (event) {
 
   customerError.textContent = "";
   order.customer = name;
-  ticketTitle.textContent = "Ticket de " + name;
+  renderTicketTitle();
 });
 
 
@@ -235,3 +235,40 @@ promoForm.addEventListener("submit", function (event) {
 
 
 // Bonus
+const checkoutButton = document.querySelector("#checkout");
+const checkoutMessage = document.querySelector("#checkout-message");
+
+order.number = 1;
+
+function renderTicketTitle() {
+  let title = "Ticket n° " + order.number;
+  if (order.customer) {
+    title += " de " + order.customer;
+  }
+  ticketTitle.textContent = title;
+}
+
+checkoutButton.addEventListener("click", function () {
+  if (order.lines.length === 0) {
+    checkoutMessage.classList.add("is-error");
+    checkoutMessage.textContent = "Le ticket est vide, rien à encaisser.";
+    return;
+  }
+
+  checkoutMessage.classList.remove("is-error");
+  checkoutMessage.textContent =
+    "Ticket n° " + order.number + " encaissé : " + formatPrice(order.getTotal());
+
+  order.lines = [];
+  order.customer = "";
+  order.discountRate = 0;
+  order.number++;
+
+  customerInput.value = "";
+  customerError.textContent = "";
+  promoInput.value = "";
+  promoMessage.textContent = "";
+
+  renderTicketTitle();
+  renderTicket();
+});
