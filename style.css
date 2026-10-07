@@ -76,6 +76,27 @@ input:focus-visible {
   line-height: 1;
 }
 
+.github-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  align-self: center;
+  margin-left: auto;
+  padding: 6px 12px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--roast-soft);
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: color 0.15s, border-color 0.15s;
+}
+
+.github-link:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
 .brand-sub {
   margin: 0;
   font-family: var(--font-display);
@@ -498,6 +519,14 @@ input:focus-visible {
 
   .brand {
     font-size: 2.1rem;
+  }
+
+  .github-link {
+    padding: 8px;
+  }
+
+  .github-link span {
+    display: none;
   }
 
   .register {
