@@ -82,6 +82,7 @@ const order = {
       id: product.id,
       name: product.name,
       price: product.price,
+      category: product.category,
       quantity: 1,
     });
   },
@@ -206,7 +207,9 @@ customerForm.addEventListener("submit", function (event) {
 order.discountRate = 0;
 
 order.getDiscount = function () {
-  return Math.round(this.getSubtotal() * this.discountRate);
+  const formulaDiscount = this.getFormulaDiscount();
+  const promoDiscount = Math.round((this.getSubtotal() - formulaDiscount) * this.discountRate);
+  return formulaDiscount + promoDiscount;
 };
 
 order.getTotal = function () {
@@ -272,3 +275,18 @@ checkoutButton.addEventListener("click", function () {
   renderTicketTitle();
   renderTicket();
 });
+
+order.getFormulaDiscount = function () {
+  let drinks = 0;
+  let pastries = 0;
+
+  for (let i = 0; i < this.lines.length; i++) {
+    if (this.lines[i].category === "pastry") {
+      pastries += this.lines[i].quantity;
+    } else {
+      drinks += this.lines[i].quantity;
+    }
+  }
+
+  return Math.min(drinks, pastries) * 100;
+};
