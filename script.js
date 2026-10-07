@@ -179,6 +179,25 @@ categoriesNav.addEventListener("click", function (event) {
 
 
 // Étape 7 · Le prénom du client
+const customerForm = document.querySelector("#customer-form");
+const customerInput = document.querySelector("#customer-name");
+const customerError = document.querySelector("#customer-error");
+const ticketTitle = document.querySelector("#ticket-title");
+
+customerForm.addEventListener("submit", function (event) {
+  event.preventDefault();
+
+  const name = customerInput.value.trim();
+
+  if (name === "") {
+    customerError.textContent = "Entre le prénom du client.";
+    return;
+  }
+
+  customerError.textContent = "";
+  order.customer = name;
+  ticketTitle.textContent = "Ticket de " + name;
+});
 
 
 // Étape 8 · Le code promo
