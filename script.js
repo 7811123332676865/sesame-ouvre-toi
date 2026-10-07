@@ -99,6 +99,7 @@ const order = {
 // Étape 4 · Afficher le ticket
 const ticketLines = document.querySelector("#ticket-lines");
 const ticketEmpty = document.querySelector("#ticket-empty");
+const ticketDiscount = document.querySelector("#ticket-discount");
 const ticketTotal = document.querySelector("#ticket-total");
 
 function renderTicket() {
@@ -142,7 +143,8 @@ function renderTicket() {
     ticketEmpty.classList.add("is-hidden");
   }
 
-  ticketTotal.textContent = formatPrice(order.getSubtotal());
+  ticketDiscount.textContent = formatPrice(order.getDiscount());
+  ticketTotal.textContent = formatPrice(order.getTotal());
 }
 
 
@@ -201,6 +203,35 @@ customerForm.addEventListener("submit", function (event) {
 
 
 // Étape 8 · Le code promo
+order.discountRate = 0;
+
+order.getDiscount = function () {
+  return Math.round(this.getSubtotal() * this.discountRate);
+};
+
+order.getTotal = function () {
+  return this.getSubtotal() - this.getDiscount();
+};
+
+const promoForm = document.querySelector("#promo-form");
+const promoInput = document.querySelector("#promo-code");
+const promoMessage = document.querySelector("#promo-message");
+
+promoForm.addEventListener("submit", function (event) {
+  event.preventDefault();
+
+  const code = promoInput.value.trim().toUpperCase();
+
+  if (code === "BARISTA") {
+    order.discountRate = 0.1;
+    promoMessage.textContent = "Code BARISTA appliqué : 10 % de remise";
+  } else {
+    order.discountRate = 0;
+    promoMessage.textContent = "Code inconnu";
+  }
+
+  renderTicket();
+});
 
 
 // Bonus
