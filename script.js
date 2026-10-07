@@ -49,6 +49,10 @@ function renderMenu() {
       button.disabled = true;
     }
 
+    button.addEventListener("click", function () {
+      order.add(product);
+    });
+
     card.append(category, name, price, button);
     menuSection.append(card);
   }
@@ -58,6 +62,33 @@ renderMenu();
 
 
 // Étape 3 · L'objet order
+const order = {
+  lines: [],
+
+  add(product) {
+    for (let i = 0; i < this.lines.length; i++) {
+      if (this.lines[i].id === product.id) {
+        this.lines[i].quantity++;
+        return;
+      }
+    }
+
+    this.lines.push({
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      quantity: 1,
+    });
+  },
+
+  getSubtotal() {
+    let subtotal = 0;
+    for (let i = 0; i < this.lines.length; i++) {
+      subtotal += this.lines[i].price * this.lines[i].quantity;
+    }
+    return subtotal;
+  },
+};
 
 
 // Étape 4 · Afficher le ticket
