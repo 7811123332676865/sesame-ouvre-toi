@@ -42,13 +42,22 @@ function renderMenu(selectedCategory = "all") {
     price.classList.add("product-price");
     price.textContent = formatPrice(product.price);
 
+    const remaining = getRemainingStock(product);
+
+    const stock = document.createElement("p");
+    stock.classList.add("product-stock");
+    stock.textContent = "x" + remaining;
+    if (remaining <= 3) {
+      stock.classList.add("is-low");
+    }
+
     const button = document.createElement("button");
     button.type = "button";
     button.classList.add("product-add");
     button.textContent = "Ajouter";
 
     // Étape 2 · Les produits épuisés
-    if (!product.available) {
+    if (remaining === 0) {
       card.classList.add("is-sold-out");
       button.disabled = true;
     }
@@ -56,14 +65,17 @@ function renderMenu(selectedCategory = "all") {
     button.addEventListener("click", function () {
       order.add(product);
       renderTicket();
+      renderMenu(currentCategory);
     });
 
-    card.append(category, name, price, button);
+    if (remaining > 0) {
+      card.append(category, name, price, stock, button);
+    } else {
+      card.append(category, name, price, button);
+    }
     menuSection.append(card);
   }
 }
-
-renderMenu();
 
 
 // Étape 3 · L'objet order
@@ -132,6 +144,7 @@ function renderTicket() {
     removeButton.addEventListener("click", function () {
       order.remove(line.id);
       renderTicket();
+      renderMenu(currentCategory);
     });
 
     item.append(name, quantity, price, removeButton);
@@ -168,6 +181,8 @@ order.remove = function (id) {
 // Étape 6 · Filtrer par catégorie
 const categoriesNav = document.querySelector("#categories");
 
+let currentCategory = "all";
+
 categoriesNav.addEventListener("click", function (event) {
   if (event.target.tagName !== "BUTTON") {
     return;
@@ -179,7 +194,8 @@ categoriesNav.addEventListener("click", function (event) {
   }
   event.target.classList.add("is-active");
 
-  renderMenu(event.target.value);
+  currentCategory = event.target.value;
+  renderMenu(currentCategory);
 });
 
 
@@ -271,6 +287,11 @@ checkoutButton.addEventListener("click", function () {
     total: order.getTotal(),
   });
 
+  for (let i = 0; i < order.lines.length; i++) {
+    const product = findProduct(order.lines[i].id);
+    product.stock -= order.lines[i].quantity;
+  }
+
   order.lines = [];
   order.customer = "";
   order.discountRate = 0;
@@ -284,6 +305,7 @@ checkoutButton.addEventListener("click", function () {
   renderTicketTitle();
   renderTicket();
   renderDayTickets();
+  renderMenu(currentCategory);
 });
 
 order.getFormulaDiscount = function () {
@@ -335,6 +357,11 @@ function renderDayTickets() {
 }
 
 function saveState() {
+  const stocks = {};
+  for (let i = 0; i < menu.length; i++) {
+    stocks[menu[i].id] = menu[i].stock;
+  }
+
   const state = {
     date: new Date().toDateString(),
     lines: order.lines,
@@ -342,6 +369,7 @@ function saveState() {
     discountRate: order.discountRate,
     number: order.number,
     dayTickets: dayTickets,
+    stocks: stocks,
   };
   localStorage.setItem("sesame", JSON.stringify(state));
 }
@@ -359,6 +387,14 @@ function loadState() {
   order.number = saved.number;
   dayTickets = saved.dayTickets;
 
+  if (saved.stocks) {
+    for (let i = 0; i < menu.length; i++) {
+      if (saved.stocks[menu[i].id] !== undefined) {
+        menu[i].stock = saved.stocks[menu[i].id];
+      }
+    }
+  }
+
   if (order.customer) {
     customerInput.value = order.customer;
   }
@@ -369,7 +405,25 @@ function loadState() {
   }
 }
 
+function findProduct(id) {
+  for (let i = 0; i < menu.length; i++) {
+    if (menu[i].id === id) {
+      return menu[i];
+    }
+  }
+}
+
+function getRemainingStock(product) {
+  for (let i = 0; i < order.lines.length; i++) {
+    if (order.lines[i].id === product.id) {
+      return product.stock - order.lines[i].quantity;
+    }
+  }
+  return product.stock;
+}
+
 loadState();
+renderMenu();
 renderTicketTitle();
 renderTicket();
 renderDayTickets();
