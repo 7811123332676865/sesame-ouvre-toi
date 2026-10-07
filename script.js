@@ -123,6 +123,10 @@ function renderTicket() {
     removeButton.classList.add("line-remove");
     removeButton.setAttribute("aria-label", "Retirer un " + line.name);
     removeButton.textContent = "−";
+    removeButton.addEventListener("click", function () {
+      order.remove(line.id);
+      renderTicket();
+    });
 
     item.append(name, quantity, price, removeButton);
     ticketLines.append(item);
@@ -139,6 +143,17 @@ function renderTicket() {
 
 
 // Étape 5 · Retirer une ligne
+order.remove = function (id) {
+  for (let i = 0; i < this.lines.length; i++) {
+    if (this.lines[i].id === id) {
+      this.lines[i].quantity--;
+      if (this.lines[i].quantity === 0) {
+        this.lines.splice(i, 1);
+      }
+      return;
+    }
+  }
+};
 
 
 // Étape 6 · Filtrer par catégorie
