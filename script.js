@@ -5,6 +5,50 @@ function formatPrice(cents) {
 
 
 // Étape 1 · Afficher la carte
+const menuSection = document.querySelector("#menu");
+
+function categoryLabel(category) {
+  if (category === "coffee") {
+    return "Café";
+  }
+  if (category === "tea") {
+    return "Thé & autres";
+  }
+  return "Pâtisserie";
+}
+
+function renderMenu() {
+  menuSection.textContent = "";
+
+  for (let i = 0; i < menu.length; i++) {
+    const product = menu[i];
+
+    const card = document.createElement("article");
+    card.classList.add("product");
+
+    const category = document.createElement("span");
+    category.classList.add("product-category");
+    category.textContent = categoryLabel(product.category);
+
+    const name = document.createElement("h3");
+    name.classList.add("product-name");
+    name.textContent = product.name;
+
+    const price = document.createElement("p");
+    price.classList.add("product-price");
+    price.textContent = formatPrice(product.price);
+
+    const button = document.createElement("button");
+    button.type = "button";
+    button.classList.add("product-add");
+    button.textContent = "Ajouter";
+
+    card.append(category, name, price, button);
+    menuSection.append(card);
+  }
+}
+
+renderMenu();
 
 
 // Étape 2 · Les produits épuisés
