@@ -246,8 +246,8 @@ input:focus-visible {
   right: 0;
   height: 10px;
   background:
-    linear-gradient(-45deg, var(--paper) 5px, transparent 0) 0 0 / 10px 10px repeat-x,
-    linear-gradient(45deg, var(--paper) 5px, transparent 0) 0 0 / 10px 10px repeat-x;
+    linear-gradient(135deg, var(--paper) 50%, transparent 50%) 0 0 / 10px 10px repeat-x,
+    linear-gradient(-135deg, var(--paper) 50%, transparent 50%) 0 0 / 10px 10px repeat-x;
 }
 
 .ticket-paper::before {
