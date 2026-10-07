@@ -51,6 +51,7 @@ function renderMenu() {
 
     button.addEventListener("click", function () {
       order.add(product);
+      renderTicket();
     });
 
     card.append(category, name, price, button);
@@ -92,6 +93,49 @@ const order = {
 
 
 // Étape 4 · Afficher le ticket
+const ticketLines = document.querySelector("#ticket-lines");
+const ticketEmpty = document.querySelector("#ticket-empty");
+const ticketTotal = document.querySelector("#ticket-total");
+
+function renderTicket() {
+  ticketLines.textContent = "";
+
+  for (let i = 0; i < order.lines.length; i++) {
+    const line = order.lines[i];
+
+    const item = document.createElement("li");
+    item.classList.add("ticket-line");
+
+    const name = document.createElement("span");
+    name.classList.add("line-name");
+    name.textContent = line.name;
+
+    const quantity = document.createElement("span");
+    quantity.classList.add("line-qty");
+    quantity.textContent = "× " + line.quantity;
+
+    const price = document.createElement("span");
+    price.classList.add("line-price");
+    price.textContent = formatPrice(line.price * line.quantity);
+
+    const removeButton = document.createElement("button");
+    removeButton.type = "button";
+    removeButton.classList.add("line-remove");
+    removeButton.setAttribute("aria-label", "Retirer un " + line.name);
+    removeButton.textContent = "−";
+
+    item.append(name, quantity, price, removeButton);
+    ticketLines.append(item);
+  }
+
+  if (order.lines.length === 0) {
+    ticketEmpty.classList.remove("is-hidden");
+  } else {
+    ticketEmpty.classList.add("is-hidden");
+  }
+
+  ticketTotal.textContent = formatPrice(order.getSubtotal());
+}
 
 
 // Étape 5 · Retirer une ligne
