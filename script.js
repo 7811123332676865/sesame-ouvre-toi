@@ -146,6 +146,8 @@ function renderTicket() {
 
   ticketDiscount.textContent = formatPrice(order.getDiscount());
   ticketTotal.textContent = formatPrice(order.getTotal());
+
+  saveState();
 }
 
 
@@ -200,6 +202,7 @@ customerForm.addEventListener("submit", function (event) {
   customerError.textContent = "";
   order.customer = name;
   renderTicketTitle();
+  saveState();
 });
 
 
@@ -262,6 +265,12 @@ checkoutButton.addEventListener("click", function () {
   checkoutMessage.textContent =
     "Ticket n° " + order.number + " encaissé : " + formatPrice(order.getTotal());
 
+  dayTickets.push({
+    number: order.number,
+    customer: order.customer,
+    total: order.getTotal(),
+  });
+
   order.lines = [];
   order.customer = "";
   order.discountRate = 0;
@@ -274,6 +283,7 @@ checkoutButton.addEventListener("click", function () {
 
   renderTicketTitle();
   renderTicket();
+  renderDayTickets();
 });
 
 order.getFormulaDiscount = function () {
@@ -290,3 +300,76 @@ order.getFormulaDiscount = function () {
 
   return Math.min(drinks, pastries) * 100;
 };
+
+const dayTicketsSection = document.querySelector("#day-tickets");
+const dayTicketsList = document.querySelector("#day-tickets-list");
+
+let dayTickets = [];
+
+function renderDayTickets() {
+  dayTicketsList.textContent = "";
+
+  for (let i = 0; i < dayTickets.length; i++) {
+    const ticket = dayTickets[i];
+
+    const item = document.createElement("li");
+
+    const label = document.createElement("span");
+    label.textContent = "N° " + ticket.number;
+    if (ticket.customer) {
+      label.textContent += " · " + ticket.customer;
+    }
+
+    const total = document.createElement("span");
+    total.textContent = formatPrice(ticket.total);
+
+    item.append(label, total);
+    dayTicketsList.append(item);
+  }
+
+  if (dayTickets.length === 0) {
+    dayTicketsSection.classList.add("is-hidden");
+  } else {
+    dayTicketsSection.classList.remove("is-hidden");
+  }
+}
+
+function saveState() {
+  const state = {
+    date: new Date().toDateString(),
+    lines: order.lines,
+    customer: order.customer,
+    discountRate: order.discountRate,
+    number: order.number,
+    dayTickets: dayTickets,
+  };
+  localStorage.setItem("sesame", JSON.stringify(state));
+}
+
+function loadState() {
+  const saved = JSON.parse(localStorage.getItem("sesame"));
+
+  if (saved === null || saved.date !== new Date().toDateString()) {
+    return;
+  }
+
+  order.lines = saved.lines;
+  order.customer = saved.customer;
+  order.discountRate = saved.discountRate;
+  order.number = saved.number;
+  dayTickets = saved.dayTickets;
+
+  if (order.customer) {
+    customerInput.value = order.customer;
+  }
+
+  if (order.discountRate > 0) {
+    promoInput.value = "BARISTA";
+    promoMessage.textContent = "Code BARISTA appliqué : 10 % de remise";
+  }
+}
+
+loadState();
+renderTicketTitle();
+renderTicket();
+renderDayTickets();

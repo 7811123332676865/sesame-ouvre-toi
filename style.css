@@ -434,6 +434,35 @@ input:focus-visible {
   color: var(--error);
 }
 
+#day-tickets {
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 2px dashed var(--line);
+}
+
+#day-tickets h3 {
+  margin: 0 0 8px;
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+#day-tickets-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--roast-soft);
+}
+
+#day-tickets-list li {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 2px 0;
+}
+
 /* ---------- Écrans étroits : le ticket passe sous la carte ---------- */
 
 @media (max-width: 860px) {
