@@ -17,11 +17,15 @@ function categoryLabel(category) {
   return "Pâtisserie";
 }
 
-function renderMenu() {
+function renderMenu(selectedCategory = "all") {
   menuSection.textContent = "";
 
   for (let i = 0; i < menu.length; i++) {
     const product = menu[i];
+
+    if (selectedCategory !== "all" && product.category !== selectedCategory) {
+      continue;
+    }
 
     const card = document.createElement("article");
     card.classList.add("product");
@@ -157,6 +161,21 @@ order.remove = function (id) {
 
 
 // Étape 6 · Filtrer par catégorie
+const categoriesNav = document.querySelector("#categories");
+
+categoriesNav.addEventListener("click", function (event) {
+  if (event.target.tagName !== "BUTTON") {
+    return;
+  }
+
+  const buttons = categoriesNav.querySelectorAll("button");
+  for (let i = 0; i < buttons.length; i++) {
+    buttons[i].classList.remove("is-active");
+  }
+  event.target.classList.add("is-active");
+
+  renderMenu(event.target.value);
+});
 
 
 // Étape 7 · Le prénom du client
