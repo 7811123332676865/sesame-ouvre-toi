@@ -43,15 +43,18 @@ function renderMenu() {
     button.classList.add("product-add");
     button.textContent = "Ajouter";
 
+    // Étape 2 · Les produits épuisés
+    if (!product.available) {
+      card.classList.add("is-sold-out");
+      button.disabled = true;
+    }
+
     card.append(category, name, price, button);
     menuSection.append(card);
   }
 }
 
 renderMenu();
-
-
-// Étape 2 · Les produits épuisés
 
 
 // Étape 3 · L'objet order
