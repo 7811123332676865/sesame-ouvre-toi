@@ -1,0 +1,152 @@
+#categories {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+#categories button {
+  padding: 8px 18px;
+  border: 1px solid var(--roast-soft);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--roast);
+  font-weight: 500;
+  transition: background 0.15s, color 0.15s;
+}
+
+#categories button:hover {
+  background: var(--cream-deep);
+}
+
+#categories button.is-active {
+  background: var(--roast);
+  border-color: var(--roast);
+  color: var(--cream);
+}
+
+#menu {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.product {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: 0 1px 0 var(--line), 0 6px 18px -12px rgba(46, 29, 20, 0.35);
+  overflow: hidden;
+}
+
+.product-category {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.product-name {
+  margin: 6px 0 4px;
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.product-price {
+  margin: 0 0 18px;
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  color: var(--roast-soft);
+}
+
+.product-stock {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.product-stock.is-low {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.product-add {
+  margin-top: auto;
+  padding: 10px 14px;
+  border: 0;
+  border-radius: 10px;
+  background: var(--roast);
+  color: var(--cream);
+  font-weight: 600;
+  transition: background 0.15s;
+}
+
+.product-add:hover {
+  background: var(--accent-dark);
+}
+
+.product.is-sold-out {
+  background: var(--cream-deep);
+  box-shadow: none;
+}
+
+.product.is-sold-out .product-name,
+.product.is-sold-out .product-price,
+.product.is-sold-out .product-category {
+  color: var(--muted);
+}
+
+.product.is-sold-out .product-name {
+  text-decoration: line-through;
+  text-decoration-thickness: 1px;
+}
+
+.product.is-sold-out::after {
+  content: "Épuisé";
+  position: absolute;
+  top: 16px;
+  right: -34px;
+  width: 130px;
+  padding: 4px 0;
+  background: var(--roast);
+  color: var(--cream);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-align: center;
+  text-transform: uppercase;
+  transform: rotate(35deg);
+}
+
+.product-add:disabled {
+  background: transparent;
+  border: 1px dashed var(--muted);
+  color: var(--muted);
+  cursor: not-allowed;
+}
+
+@media (max-width: 480px) {
+  #menu {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .product {
+    padding: 14px;
+  }
+
+  .product-name {
+    font-size: 1.1rem;
+  }
+}

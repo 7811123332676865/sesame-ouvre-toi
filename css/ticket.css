@@ -1,0 +1,249 @@
+#ticket {
+  position: sticky;
+  top: 24px;
+}
+
+.ticket-paper {
+  position: relative;
+  padding: 28px 24px 32px;
+  background: var(--paper);
+  box-shadow: 0 10px 30px -18px rgba(46, 29, 20, 0.5);
+}
+
+/* Bords dentelés en haut et en bas, comme un ticket arraché */
+.ticket-paper::before,
+.ticket-paper::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 10px;
+  background:
+    linear-gradient(135deg, var(--paper) 50%, transparent 50%) 0 0 / 10px 10px repeat-x,
+    linear-gradient(-135deg, var(--paper) 50%, transparent 50%) 0 0 / 10px 10px repeat-x;
+}
+
+.ticket-paper::before {
+  top: -10px;
+  transform: rotate(180deg);
+}
+
+.ticket-paper::after {
+  bottom: -10px;
+}
+
+#ticket label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--roast-soft);
+}
+
+.field-row {
+  display: flex;
+  gap: 8px;
+}
+
+.field-row input {
+  flex: 1;
+  min-width: 0;
+  padding: 8px 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--cream);
+  color: var(--roast);
+}
+
+.field-row button {
+  padding: 8px 14px;
+  border: 1px solid var(--roast);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--roast);
+  font-weight: 600;
+}
+
+.field-row button:hover {
+  background: var(--roast);
+  color: var(--cream);
+}
+
+.form-error {
+  min-height: 1.4em;
+  margin: 6px 0 0;
+  font-size: 0.85rem;
+  color: var(--error);
+}
+
+#ticket-title {
+  margin: 12px 0 0;
+  padding-top: 16px;
+  border-top: 2px dashed var(--line);
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+#ticket-empty {
+  margin: 12px 0;
+  font-style: italic;
+  color: var(--muted);
+}
+
+#ticket-lines {
+  margin: 12px 0 20px;
+  padding: 0;
+  list-style: none;
+}
+
+.ticket-line {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto auto;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 0;
+  border-bottom: 1px dotted var(--line);
+}
+
+.line-name {
+  font-weight: 500;
+  overflow-wrap: anywhere;
+}
+
+.line-qty,
+.line-price {
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+}
+
+.line-qty {
+  color: var(--muted);
+}
+
+.line-price {
+  min-width: 4.5em;
+  text-align: right;
+}
+
+.line-remove {
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--roast-soft);
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+.line-remove:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+#promo-form {
+  padding-top: 16px;
+  border-top: 2px dashed var(--line);
+}
+
+#promo-message {
+  min-height: 1.4em;
+  margin: 6px 0 0;
+  font-size: 0.85rem;
+  color: var(--sage);
+}
+
+.ticket-sums {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 2px dashed var(--line);
+}
+
+.sum-row {
+  display: flex;
+  justify-content: space-between;
+  margin: 4px 0;
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  color: var(--roast-soft);
+}
+
+.sum-total {
+  margin-top: 8px;
+  font-size: 1.3rem;
+  color: var(--roast);
+}
+
+#checkout {
+  width: 100%;
+  margin-top: 20px;
+  padding: 14px;
+  border: 0;
+  border-radius: 10px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  transition: background 0.15s;
+}
+
+#checkout:hover {
+  background: var(--accent-dark);
+}
+
+#checkout-message {
+  min-height: 1.4em;
+  margin: 10px 0 0;
+  font-size: 0.9rem;
+  text-align: center;
+  color: var(--sage);
+}
+
+#checkout-message.is-error {
+  color: var(--error);
+}
+
+#day-tickets {
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 2px dashed var(--line);
+}
+
+#day-tickets h3 {
+  margin: 0 0 8px;
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+#day-tickets-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--roast-soft);
+}
+
+#day-tickets-list li {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 2px 0;
+}
+
+@media (max-width: 860px) {
+  #ticket {
+    position: static;
+  }
+}
+
+@media (max-width: 480px) {
+  .ticket-paper {
+    padding: 24px 16px 28px;
+  }
+}

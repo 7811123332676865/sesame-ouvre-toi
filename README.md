@@ -10,14 +10,19 @@ La page est déjà préparée en HTML/CSS. Il ne lui manque que le JavaScript, e
 Clone ce repository.
 
 
-| Fichier      | Ce qu'il contient                                                                       |
-| ------------ | --------------------------------------------------------------------------------------- |
-| `index.html` | La page, et en commentaire le modèle exact d'une carte produit et d'une ligne de ticket |
-| `style.css`  | Tout le style, y compris celui des éléments que tu vas créer                            |
-| `menu.js`    | La carte du café : un tableau d'objets, avec les prix en centimes                       |
-| `script.js`  | Ton code, une section par étape                                                         |
+| Fichier / dossier       | Ce qu'il contient                                                        |
+| ----------------------- | ------------------------------------------------------------------------ |
+| `index.html`            | La page                                                                  |
+| `css/`                  | Le style, un fichier par zone : base, en-tête, mise en page, carte, ticket |
+| `js/main.js`            | Point d'entrée : charge l'état, branche les événements, rafraîchit l'UI  |
+| `js/data/menu.js`       | La carte, avec les prix en centimes                                      |
+| `js/store/`             | La logique métier : ticket, stock, encaissement, sauvegarde localStorage |
+| `js/ui/`                | Le rendu DOM et les événements de chaque zone de la page                 |
+| `js/utils/format.js`    | `formatPrice`                                                            |
 
-☝ Les prix sont en **centimes** : `280` veut dire 2,80 €. Pour les afficher, `script.js` te donne déjà `formatPrice(280)`, qui renvoie `"2,80 €"`
+☝ Les scripts sont des modules ES : ouvre la page via un serveur local (Live Server, `python3 -m http.server`…), pas en double-cliquant sur `index.html`.
+
+☝ Les prix sont en **centimes** : `280` veut dire 2,80 €. Pour les afficher, `js/utils/format.js` fournit `formatPrice(280)`, qui renvoie `"2,80 €"`
 
 ## Les règles
 
