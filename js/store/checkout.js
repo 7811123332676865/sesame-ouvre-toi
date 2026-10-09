@@ -9,9 +9,17 @@ export function checkout() {
     total: order.getTotal(),
   };
 
+  const receipt = {
+    ...ticket,
+    lines: order.lines,
+    subtotal: order.getSubtotal(),
+    discount: order.getDiscount(),
+    paidAt: new Date(),
+  };
+
   dayTickets.push(ticket);
   consumeStock(order.lines);
   order.next();
 
-  return ticket;
+  return receipt;
 }

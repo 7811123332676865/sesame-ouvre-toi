@@ -3,6 +3,7 @@ import { checkout } from "../store/checkout.js";
 import { formatPrice } from "../utils/format.js";
 import { resetCustomerForm } from "./customerForm.js";
 import { resetPromoForm } from "./promoForm.js";
+import { printReceipt } from "./receipt.js";
 
 const checkoutButton = document.querySelector("#checkout");
 const checkoutMessage = document.querySelector("#checkout-message");
@@ -15,14 +16,15 @@ export function initCheckout(onChange) {
       return;
     }
 
-    const ticket = checkout();
+    const receipt = checkout();
 
     checkoutMessage.classList.remove("is-error");
     checkoutMessage.textContent =
-      "Ticket n° " + ticket.number + " encaissé : " + formatPrice(ticket.total);
+      "Ticket n° " + receipt.number + " encaissé : " + formatPrice(receipt.total);
 
     resetCustomerForm();
     resetPromoForm();
     onChange();
+    printReceipt(receipt);
   });
 }

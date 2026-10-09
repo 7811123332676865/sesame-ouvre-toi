@@ -213,27 +213,20 @@
   border-top: 2px dashed var(--line);
 }
 
-#day-tickets h3 {
-  margin: 0 0 8px;
-  font-family: var(--font-display);
-  font-size: 1rem;
+#day-report {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid var(--roast);
+  border-radius: 10px;
+  background: transparent;
+  color: var(--roast);
   font-weight: 600;
+  transition: background 0.15s, color 0.15s;
 }
 
-#day-tickets-list {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  font-family: var(--font-mono);
-  font-size: 0.85rem;
-  color: var(--roast-soft);
-}
-
-#day-tickets-list li {
-  display: flex;
-  justify-content: space-between;
-  gap: 12px;
-  padding: 2px 0;
+#day-report:hover {
+  background: var(--roast);
+  color: var(--cream);
 }
 
 @media (max-width: 860px) {

@@ -1,0 +1,224 @@
+#receipt-printer {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 40px 16px;
+  overflow-y: auto;
+  background: rgba(46, 29, 20, 0.55);
+  animation: receipt-fade 0.2s ease-out;
+}
+
+#receipt-printer.is-hidden {
+  display: none;
+}
+
+.printer {
+  position: relative;
+  width: min(320px, 100%);
+}
+
+.printer::after {
+  content: "";
+  position: absolute;
+  z-index: 3;
+  top: 48px;
+  left: 18px;
+  right: 18px;
+  height: 6px;
+  border-radius: 3px;
+  background: #140c08;
+}
+
+.printer-body {
+  position: relative;
+  z-index: 1;
+  height: 64px;
+  border-radius: 16px 16px 8px 8px;
+  background: linear-gradient(180deg, #4a3326, var(--roast));
+  box-shadow: 0 12px 24px -12px rgba(0, 0, 0, 0.6);
+}
+
+.printer-light {
+  position: absolute;
+  top: 14px;
+  right: 18px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--sage);
+}
+
+.printer-slot {
+  position: relative;
+  z-index: 2;
+  margin: -13px 28px 0;
+  padding-bottom: 12px;
+  overflow: hidden;
+}
+
+.printer-slot::before {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 14px;
+  background: linear-gradient(180deg, rgba(20, 12, 8, 0.35), transparent);
+  pointer-events: none;
+}
+
+.receipt {
+  position: relative;
+  padding: 24px 20px 20px;
+  background: var(--paper);
+  color: var(--roast);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.25));
+  transform: translateY(-100%);
+}
+
+.receipt::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -5px;
+  height: 6px;
+  background: var(--paper);
+  mask: conic-gradient(from -45deg at bottom, transparent, #000 1deg 89deg, transparent 90deg) 50% / 10px 100%;
+}
+
+.receipt p {
+  margin: 0;
+}
+
+.receipt-logo {
+  display: block;
+  width: 40px;
+  height: 40px;
+  margin: 0 auto 6px;
+}
+
+.receipt-brand {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+.receipt-sub {
+  font-family: var(--font-display);
+  font-style: italic;
+  color: var(--accent);
+  text-align: center;
+}
+
+.receipt .receipt-meta {
+  margin-top: 12px;
+  white-space: pre-line;
+  text-align: center;
+  color: var(--roast-soft);
+}
+
+.receipt-lines {
+  margin: 14px 0 0;
+  padding: 10px 0;
+  border-top: 1px dashed var(--line);
+  border-bottom: 1px dashed var(--line);
+  list-style: none;
+}
+
+.receipt-lines li,
+.receipt-sums p {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 2px 0;
+}
+
+.receipt-sums {
+  margin-top: 8px;
+  color: var(--roast-soft);
+}
+
+.receipt-sums .receipt-total {
+  margin-top: 6px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--roast);
+}
+
+.receipt .receipt-thanks {
+  margin-top: 16px;
+  text-align: center;
+  color: var(--roast-soft);
+}
+
+#receipt-close {
+  padding: 10px 28px;
+  border: 0;
+  border-radius: 10px;
+  background: var(--paper);
+  color: var(--roast);
+  font-weight: 600;
+  opacity: 0;
+}
+
+#receipt-close:hover {
+  background: var(--cream-deep);
+}
+
+#receipt-printer.is-printing .receipt {
+  animation: receipt-print 2.4s steps(24, end) 0.3s forwards;
+}
+
+#receipt-printer.is-printing .printer-light {
+  animation: printer-blink 0.3s steps(2, start) 0.3s 8;
+}
+
+#receipt-printer.is-printing #receipt-close {
+  animation: receipt-fade 0.3s ease-out 2.7s forwards;
+}
+
+@keyframes receipt-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes receipt-print {
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes printer-blink {
+  to {
+    background: var(--accent);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #receipt-printer.is-printing .receipt,
+  #receipt-printer.is-printing .printer-light,
+  #receipt-printer.is-printing #receipt-close {
+    animation: none;
+  }
+
+  .receipt {
+    transform: none;
+  }
+
+  #receipt-close {
+    opacity: 1;
+  }
+}

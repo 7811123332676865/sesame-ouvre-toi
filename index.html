@@ -15,6 +15,7 @@
   <link rel="stylesheet" href="css/layout.css">
   <link rel="stylesheet" href="css/menu.css">
   <link rel="stylesheet" href="css/ticket.css">
+  <link rel="stylesheet" href="css/receipt.css">
 </head>
 
 <body>
@@ -79,14 +80,33 @@
         <p id="checkout-message"></p>
 
         <section id="day-tickets" class="is-hidden">
-          <h3>Tickets du jour</h3>
-          <ul id="day-tickets-list"></ul>
+          <button type="button" id="day-report">Imprimer les tickets du jour</button>
         </section>
 
       </div>
     </aside>
 
   </main>
+
+  <div id="receipt-printer" class="is-hidden" role="dialog" aria-modal="true" aria-label="Ticket imprimé">
+    <div class="printer">
+      <div class="printer-body">
+        <span class="printer-light"></span>
+      </div>
+      <div class="printer-slot">
+        <div class="receipt">
+          <img class="receipt-logo" src="img/cookie.svg" alt="">
+          <p class="receipt-brand">Sesame</p>
+          <p class="receipt-sub">le comptoir</p>
+          <p id="receipt-meta" class="receipt-meta"></p>
+          <ul id="receipt-lines" class="receipt-lines"></ul>
+          <div id="receipt-sums" class="receipt-sums"></div>
+          <p id="receipt-footer" class="receipt-thanks"></p>
+        </div>
+      </div>
+    </div>
+    <button type="button" id="receipt-close">Fermer</button>
+  </div>
 
   <script type="module" src="js/main.js"></script>
 </body>
