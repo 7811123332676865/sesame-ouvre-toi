@@ -15,8 +15,9 @@ const orderFormat = {
         required: ["id", "quantity"],
       },
     },
+    customer: { type: "string" },
   },
-  required: ["lines"],
+  required: ["lines", "customer"],
 };
 
 export async function askOrder(text) {

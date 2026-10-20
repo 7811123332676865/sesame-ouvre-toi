@@ -1,6 +1,7 @@
 import { order } from "../store/order.js";
 import { findProduct, getRemainingStock } from "../store/inventory.js";
 import { askOrder } from "../ai/order.js";
+import { fillCustomerForm } from "./customerForm.js";
 
 const MAX_QUANTITY = 10;
 
@@ -66,6 +67,12 @@ export function initAiForm(onChange) {
     try {
       const answer = await askOrder(text);
       const refusals = addLines(answer.lines);
+
+      const customer = answer.customer.trim();
+      if (customer !== "") {
+        order.customer = customer;
+        fillCustomerForm(customer);
+      }
 
       aiInput.value = "";
       aiMessage.classList.toggle("is-error", refusals.length > 0);

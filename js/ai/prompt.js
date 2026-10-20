@@ -10,4 +10,6 @@ export const orderPrompt =
   "Voici la carte, au format JSON : " + menuText + ". " +
   "Pour chaque produit commandé, renvoie son id et sa quantité. " +
   "Utilise uniquement les produits de la carte. " +
-  "Si un produit n'est pas sur la carte, ignore-le.";
+  "Si un produit n'est pas sur la carte, ignore-le. " +
+  "Si la phrase contient le prénom du client, renvoie-le dans customer. " +
+  "Sinon, renvoie une chaîne vide dans customer.";

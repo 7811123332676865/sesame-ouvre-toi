@@ -9,6 +9,11 @@ export function resetCustomerForm() {
   customerError.textContent = "";
 }
 
+export function fillCustomerForm(name) {
+  customerInput.value = name;
+  customerError.textContent = "";
+}
+
 export function initCustomerForm(onChange) {
   customerInput.value = order.customer;
 
