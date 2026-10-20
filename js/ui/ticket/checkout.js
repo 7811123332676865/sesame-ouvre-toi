@@ -1,9 +1,9 @@
-import { order } from "../store/order.js";
-import { checkout } from "../store/checkout.js";
-import { formatPrice } from "../utils/format.js";
+import { order } from "../../store/order.js";
+import { checkout } from "../../store/checkout.js";
+import { formatPrice } from "../../utils/format.js";
 import { resetCustomerForm } from "./customerForm.js";
 import { resetPromoForm } from "./promoForm.js";
-import { printReceipt } from "./receipt.js";
+import { printReceipt } from "../receipt/receipt.js";
 
 const checkoutButton = document.querySelector("#checkout");
 const checkoutMessage = document.querySelector("#checkout-message");

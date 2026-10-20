@@ -1,5 +1,5 @@
-import { order } from "../store/order.js";
-import { formatPrice } from "../utils/format.js";
+import { order } from "../../store/order.js";
+import { formatPrice } from "../../utils/format.js";
 
 const ticketTitle = document.querySelector("#ticket-title");
 const ticketLines = document.querySelector("#ticket-lines");

@@ -1,12 +1,12 @@
 import { loadState, saveState } from "./store/storage.js";
-import { initMenu, renderMenu } from "./ui/menu.js";
-import { initTicket, renderTicket } from "./ui/ticket.js";
-import { initDayTickets, renderDayTickets } from "./ui/dayTickets.js";
-import { initCustomerForm } from "./ui/customerForm.js";
-import { initPromoForm } from "./ui/promoForm.js";
-import { initCheckout } from "./ui/checkout.js";
-import { initReceipt } from "./ui/receipt.js";
-import { initAiForm } from "./ui/aiForm.js";
+import { initMenu, renderMenu } from "./ui/menu/menu.js";
+import { initTicket, renderTicket } from "./ui/ticket/ticket.js";
+import { initDayTickets, renderDayTickets } from "./ui/ticket/dayTickets.js";
+import { initCustomerForm } from "./ui/ticket/customerForm.js";
+import { initPromoForm } from "./ui/ticket/promoForm.js";
+import { initCheckout } from "./ui/ticket/checkout.js";
+import { initReceipt } from "./ui/receipt/receipt.js";
+import { initAiForm } from "./ui/assistant/aiForm.js";
 
 function refresh() {
   renderMenu();

@@ -1,7 +1,7 @@
-import { menu } from "../data/menu.js";
-import { order } from "../store/order.js";
-import { findProduct, getRemainingStock } from "../store/inventory.js";
-import { formatPrice } from "../utils/format.js";
+import { menu } from "../../data/menu.js";
+import { order } from "../../store/order.js";
+import { findProduct, getRemainingStock } from "../../store/inventory.js";
+import { formatPrice } from "../../utils/format.js";
 
 const LOW_STOCK = 3;
 

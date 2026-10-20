@@ -1,4 +1,4 @@
-import { order } from "../store/order.js";
+import { order } from "../../store/order.js";
 
 const promoForm = document.querySelector("#promo-form");
 const promoInput = document.querySelector("#promo-code");

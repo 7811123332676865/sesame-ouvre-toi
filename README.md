@@ -16,8 +16,9 @@ Clone ce repository.
 | `css/`                  | Le style, un fichier par zone : base, en-tête, mise en page, carte, ticket |
 | `js/main.js`            | Point d'entrée : charge l'état, branche les événements, rafraîchit l'UI  |
 | `js/data/menu.js`       | La carte, avec les prix en centimes                                      |
-| `js/store/`             | La logique métier : ticket, stock, encaissement, sauvegarde localStorage |
-| `js/ui/`                | Le rendu DOM et les événements de chaque zone de la page                 |
+| `js/ai/`                | Les appels à Qwen via Ollama : prise de commande et conseil              |
+| `js/store/`             | La logique métier : ticket, stock, encaissement, sauvegarde localStorage, vérification des réponses de l'IA |
+| `js/ui/`                | Le rendu DOM et les événements de chaque zone de la page (`assistant/`, `menu/`, `ticket/`, `receipt/`) |
 | `js/utils/format.js`    | `formatPrice`                                                            |
 
 ☝ Les scripts sont des modules ES : ouvre la page via un serveur local (Live Server, `python3 -m http.server`…), pas en double-cliquant sur `index.html`.

@@ -1,4 +1,4 @@
-import { findProduct } from "../store/inventory.js";
+import { findProduct } from "../../store/inventory.js";
 
 const adviceBox = document.querySelector("#ai-advice");
 const adviceText = document.querySelector("#ai-advice-text");

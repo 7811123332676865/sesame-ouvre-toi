@@ -1,4 +1,4 @@
-import { order } from "../store/order.js";
+import { order } from "../../store/order.js";
 
 const customerForm = document.querySelector("#customer-form");
 const customerInput = document.querySelector("#customer-name");

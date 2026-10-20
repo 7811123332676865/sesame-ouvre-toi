@@ -1,4 +1,4 @@
-import { formatPrice } from "../utils/format.js";
+import { formatPrice } from "../../utils/format.js";
 
 const printer = document.querySelector("#receipt-printer");
 const receiptMeta = document.querySelector("#receipt-meta");
