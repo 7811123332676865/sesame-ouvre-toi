@@ -31,6 +31,25 @@ function checkLine(line) {
   return "";
 }
 
+function addLines(lines) {
+  const refusals = [];
+
+  for (const line of lines) {
+    const refusal = checkLine(line);
+    if (refusal !== "") {
+      refusals.push(refusal);
+      continue;
+    }
+
+    const product = findProduct(line.id);
+    for (let i = 0; i < line.quantity; i++) {
+      order.add(product);
+    }
+  }
+
+  return refusals;
+}
+
 export function initAiForm(onChange) {
   aiForm.addEventListener("submit", async function (event) {
     event.preventDefault();
@@ -44,26 +63,19 @@ export function initAiForm(onChange) {
     aiMessage.classList.remove("is-error");
     aiMessage.textContent = "Qwen prend la commande…";
 
-    const answer = await askOrder(text);
-    const refusals = [];
+    try {
+      const answer = await askOrder(text);
+      const refusals = addLines(answer.lines);
 
-    for (const line of answer.lines) {
-      const refusal = checkLine(line);
-      if (refusal !== "") {
-        refusals.push(refusal);
-        continue;
-      }
-
-      const product = findProduct(line.id);
-      for (let i = 0; i < line.quantity; i++) {
-        order.add(product);
-      }
+      aiInput.value = "";
+      aiMessage.classList.toggle("is-error", refusals.length > 0);
+      aiMessage.textContent = refusals.join(" · ");
+      onChange();
+    } catch {
+      aiMessage.classList.add("is-error");
+      aiMessage.textContent = "L'IA ne répond pas : prends la commande à la main.";
     }
 
-    aiInput.value = "";
-    aiMessage.classList.toggle("is-error", refusals.length > 0);
-    aiMessage.textContent = refusals.join(" · ");
     aiSubmit.disabled = false;
-    onChange();
   });
 }
