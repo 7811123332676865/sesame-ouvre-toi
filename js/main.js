@@ -6,6 +6,7 @@ import { initCustomerForm } from "./ui/customerForm.js";
 import { initPromoForm } from "./ui/promoForm.js";
 import { initCheckout } from "./ui/checkout.js";
 import { initReceipt } from "./ui/receipt.js";
+import { initAiForm } from "./ui/aiForm.js";
 
 function refresh() {
   renderMenu();
@@ -22,6 +23,7 @@ initCustomerForm(refresh);
 initPromoForm(refresh);
 initCheckout(refresh);
 initReceipt();
+initAiForm(refresh);
 initDayTickets();
 
 refresh();
