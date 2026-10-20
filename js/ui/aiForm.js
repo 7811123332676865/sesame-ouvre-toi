@@ -1,9 +1,12 @@
 import { order } from "../store/order.js";
 import { findProduct, getRemainingStock } from "../store/inventory.js";
 import { askOrder } from "../ai/order.js";
+import { askAdvice } from "../ai/advice.js";
 import { fillCustomerForm } from "./customerForm.js";
+import { initAdviceBox, showAdvice, hideAdvice } from "./adviceBox.js";
 
 const MAX_QUANTITY = 10;
+const MAX_SUGGESTIONS = 2;
 
 const aiForm = document.querySelector("#ai-form");
 const aiInput = document.querySelector("#ai-input");
@@ -51,7 +54,58 @@ function addLines(lines) {
   return refusals;
 }
 
+function keepAvailable(ids) {
+  const kept = [];
+
+  for (const id of ids) {
+    const product = findProduct(id);
+    if (product && getRemainingStock(product) > 0 && !kept.includes(id)) {
+      kept.push(id);
+    }
+  }
+
+  return kept.slice(0, MAX_SUGGESTIONS);
+}
+
+function showRefusals(refusals) {
+  aiMessage.classList.toggle("is-error", refusals.length > 0);
+  aiMessage.textContent = refusals.join(", ");
+}
+
+function takeOrder(answer) {
+  hideAdvice();
+  showRefusals(addLines(answer.lines));
+
+  const customer = answer.customer.trim();
+  if (customer !== "") {
+    order.customer = customer;
+    fillCustomerForm(customer);
+  }
+}
+
+async function giveAdvice(text) {
+  aiMessage.textContent = "Qwen cherche un conseil…";
+
+  const advice = await askAdvice(text);
+  const ids = keepAvailable(advice.ids);
+
+  if (ids.length === 0) {
+    hideAdvice();
+    aiMessage.textContent = "Qwen n'a rien trouvé de disponible pour cette envie.";
+    return;
+  }
+
+  aiMessage.textContent = "";
+  showAdvice(ids, advice.message);
+}
+
 export function initAiForm(onChange) {
+  initAdviceBox(function (ids) {
+    const lines = ids.map((id) => ({ id: id, quantity: 1 }));
+    showRefusals(addLines(lines));
+    onChange();
+  });
+
   aiForm.addEventListener("submit", async function (event) {
     event.preventDefault();
 
@@ -66,17 +120,14 @@ export function initAiForm(onChange) {
 
     try {
       const answer = await askOrder(text);
-      const refusals = addLines(answer.lines);
 
-      const customer = answer.customer.trim();
-      if (customer !== "") {
-        order.customer = customer;
-        fillCustomerForm(customer);
+      if (answer.intent === "advice") {
+        await giveAdvice(text);
+      } else {
+        takeOrder(answer);
       }
 
       aiInput.value = "";
-      aiMessage.classList.toggle("is-error", refusals.length > 0);
-      aiMessage.textContent = refusals.join(" · ");
       onChange();
     } catch {
       aiMessage.classList.add("is-error");

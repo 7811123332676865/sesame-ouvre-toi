@@ -51,3 +51,54 @@
 #ai-message.is-error {
   color: var(--error);
 }
+
+#ai-advice {
+  margin-bottom: 20px;
+  padding: 14px 18px;
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--sage);
+  border-radius: var(--radius);
+  background: var(--paper);
+}
+
+#ai-advice-text {
+  margin: 0 0 6px;
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+}
+
+#ai-advice-products {
+  margin: 0 0 12px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--sage);
+}
+
+.advice-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.advice-actions button {
+  padding: 8px 16px;
+  border: 1px solid var(--roast);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--roast);
+  font-weight: 600;
+}
+
+.advice-actions button:hover {
+  background: var(--cream-deep);
+}
+
+#advice-accept {
+  border-color: var(--sage);
+  background: var(--sage);
+  color: var(--paper);
+}
+
+#advice-accept:hover {
+  background: var(--roast);
+  border-color: var(--roast);
+}

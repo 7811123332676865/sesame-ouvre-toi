@@ -16,8 +16,9 @@ const orderFormat = {
       },
     },
     customer: { type: "string" },
+    intent: { type: "string", enum: ["order", "advice"] },
   },
-  required: ["lines", "customer"],
+  required: ["lines", "customer", "intent"],
 };
 
 export async function askOrder(text) {
